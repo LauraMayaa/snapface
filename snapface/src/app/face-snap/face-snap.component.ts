@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FaceSnap } from '../models/face-snap.model';
+import { FaceSnapsService } from '../services/face-snaps.service';
 
 @Component({
   selector: 'app-face-snap',
@@ -12,6 +13,10 @@ export class FaceSnapComponent implements OnInit {
 
   buttonText!: string;
 
+  constructor(private faceSnapsService: FaceSnapsService) {
+
+  }
+
   // ici on a gardé uniquement le boutton et la méthode lié au bouton car ce sera le même bouton pour chaque snap
   // A noter qu'on initialise le bouton ds la méthode ngOnInit()
   ngOnInit() {
@@ -22,11 +27,11 @@ export class FaceSnapComponent implements OnInit {
   onAddSnap() {
 
     if (this.buttonText === 'Oh Snap!') {
-      this.faceSnap.snaps++;
+      this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap');
       this.buttonText = 'OOPS'
 
     } else {
-      this.faceSnap.snaps--;
+      this.faceSnapsService.snapFaceSnapById(this.faceSnap.id, 'unsnap');
       this.buttonText = 'Oh Snap!'
     }
   }
